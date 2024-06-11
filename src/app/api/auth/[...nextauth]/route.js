@@ -2,8 +2,8 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import User from "@/models/User";
-import connect from "@/utils/db";
+import User from "../../../../models/User";
+import connect from "../../../../utils/db";
 
 export const authOptions = {
   providers: [
@@ -39,6 +39,18 @@ export const authOptions = {
     }),
   ],
   callbacks: {
+    async session({ session, token, user }) {
+      session.user.id = token.id;
+      session.user.username = token.username;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+      }
+      return token;
+    },
     async signIn({ user, account }) {
       if (account.provider === "credentials") {
         return true;
@@ -50,6 +62,7 @@ export const authOptions = {
           if (!existingUser) {
             const newUser = new User({
               email: user.email,
+              username: user.name, // Assuming you want to use the Google name as username
             });
             await newUser.save();
           }
