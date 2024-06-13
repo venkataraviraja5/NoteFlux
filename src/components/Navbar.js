@@ -7,34 +7,34 @@ const Navbar = () => {
   const { data: session } = useSession();
   return (
     <div>
-      <ul className="flex justify-between m-10 item-center">
+      <ul className="flex justify-between m-10 items-center text-black">
         <div>
           <Link href="/">
-            <li>Home</li>
+            <li className="bg-[#dafa53] rounded-full font-semibold py-1 px-5">Home</li>
           </Link>
         </div>
         <div className="flex gap-10">
-          <Link href="/dashboard">
-            <li>Dashboard</li>
-          </Link>
+          {/* <Link href="/dashboard">
+            <li className="bg-[#dafa53] rounded-full font-semibold py-1 px-5">Dashboard</li>
+          </Link> */}
           {!session ? (
             <>
               <Link href="/login">
-                <li>Login</li>
+                <li className="bg-[#dafa53] rounded-full font-semibold py-1 px-5">Login</li>
               </Link>
               <Link href="/register">
-                <li>Register</li>
+                <li className="bg-[#dafa53] rounded-full font-semibold py-1 px-5">Register</li>
               </Link>
             </>
           ) : (
             <>
-              {session.user?.username}
+              <li className="bg-[#dafa53] rounded-full font-semibold py-1 px-5 items-center ">{session.user?.username}</li>
               <li>
                 <button
                   onClick={() => {
                     signOut();
                   }}
-                  className="p-2 px-5 -mt-1 bg-blue-800 rounded-full"
+                  className="py-1 px-5 font-semibold bg-sky-300 rounded-full"
                 >
                   Logout
                 </button>
