@@ -42,7 +42,7 @@ export const POST = async (req, res) => {
       model: "gpt-4",
       messages: [
         { role: "assistant", content: `${context}\n${question}` },
-        { role: "user", content: "Answer the question based on the context provided.Otherwise give general answer" } // Instructs the model to answer the question
+        { role: "user", content: "Answer the question based on the context provided.If no context is present then give genral answers ." } // Instructs the model to answer the question
       ],
     });
 
