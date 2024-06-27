@@ -58,7 +58,7 @@ export default function AskQuestion() {
         {loading ? 'Asking...' : 'Ask Question'}
       </button>
       {answer && (
-        <div className="mt-4 p-4 border rounded bg-gray-100 w-full">
+        <div className="mt-4 p-4 border rounded bg-gray-100 w-full text-black">
           <p>{answer}</p>
         </div>
       )}
