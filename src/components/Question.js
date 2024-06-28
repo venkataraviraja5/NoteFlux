@@ -42,26 +42,29 @@ export default function AskQuestion() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <input
-        type="text"
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-        placeholder="Ask a question based on your notes..."
-        className="p-2 border rounded mb-4 w-full text-black"
-      />
-      <button
-        onClick={handleAskQuestion}
-        className="bg-blue-500 text-white p-2 rounded"
-        disabled={loading}
-      >
-        {loading ? 'Asking...' : 'Ask Question'}
-      </button>
-      {answer && (
-        <div className="mt-4 p-4 border rounded bg-gray-100 w-full text-black">
-          <p>{answer}</p>
-        </div>
-      )}
+    <div className="flex flex-col items-center justify-center w-full mt-11 p-4 ">
+      <div className="w-full max-w-lg bg-black shadow-md rounded-2xl p-6 border border-[#dafa53] ">
+        <h1 className="text-xl font-semibold mb-4 text-center ">Ask a Question</h1>
+        <input
+          type="text"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Ask a question based on your notes..."
+          className="px-2 py-1 border rounded-xl mb-4 w-full text-black"
+        />
+        <button
+          onClick={handleAskQuestion}
+          className="bg-sky-400 text-black text-semibold p-1 rounded-xl w-full"
+          disabled={loading}
+        >
+          {loading ? 'Asking...' : 'Ask Question'}
+        </button>
+        {answer && (
+          <div className="mt-4 p-4 border rounded-xl bg-gray-100 w-full text-black ">
+            <p>{answer}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

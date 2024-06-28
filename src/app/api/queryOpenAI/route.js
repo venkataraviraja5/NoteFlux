@@ -36,6 +36,7 @@ export const POST = async (req, res) => {
 
     // Create context for the OpenAI query
     const context = notes.map((note) => note.transcript).join("\n");
+    console.log(context)
 
     // Send request to OpenAI for completions
     const completion = await openai.chat.completions.create({
