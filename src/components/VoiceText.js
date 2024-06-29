@@ -124,7 +124,7 @@ export default function VoiceText() {
           {isRecording ? (
             <button
               onClick={handleToggleRecording}
-              className="mt-10 m-auto flex items-center justify-center bg-red-400 hover:bg-red-500 rounded-full w-20 h-20 focus:outline-none"
+              className="mt-10 m-auto flex items-center justify-center bg-[#dafa53] hover:bg-red-500 rounded-full w-20 h-20 focus:outline-none"
             >
               <svg
                 className="h-12 w-12"
@@ -137,7 +137,7 @@ export default function VoiceText() {
           ) : (
             <button
               onClick={handleToggleRecording}
-              className="mt-10 m-auto flex items-center justify-center bg-[#dafa53] hover:bg-blue-500 rounded-full w-20 h-20 focus:outline-none"
+              className="mt-10 m-auto flex items-center justify-center bg-[#dafa53] hover:bg-orange-400 rounded-full w-20 h-20 focus:outline-none"
             >
               <svg
                 viewBox="0 0 256 256"
@@ -153,12 +153,14 @@ export default function VoiceText() {
           )}
         </div>
         {recordingComplete && (
+           <div className="flex justify-center mt-4">
           <button
             onClick={handleSaveTranscript}
-            className="mt-4 bg-blue-500 text-white p-2 rounded"
+            className="mt-4 mx-auto bg-sky-300 text-black p-2 rounded text-sm "
           >
             Save Transcript
           </button>
+          </div>
         )}
       </div>
     </div>

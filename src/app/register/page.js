@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -67,45 +68,49 @@ const Register = () => {
   };
 
   if (sessionStatus === "loading") {
-    return <h1>Loading...</h1>;
+    return   (
+      <div className="flex min-h-screen items-center justify-center">
+        <ClipLoader size={50} color={"#123abc"} loading={true} />
+      </div>
+    );
   }
 
   return (
     sessionStatus !== "authenticated" && (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="bg-[#212121] p-8 rounded shadow-md w-96">
-          <h1 className="text-4xl text-center font-semibold mb-8">Register</h1>
+          <h1 className="text-2xl text-center font-semibold mb-8">Register</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
-              placeholder="Email"
+              className="w-full border border-gray-300 text-black rounded px-3 py-1 mb-4 focus:outline-none focus:border-blue-400 focus:text-black text-sm"
+              placeholder="Email "
               required
             />
             <input
               type="text" // Updated
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
+              className="w-full border border-gray-300 text-black rounded px-3 py-1 mb-4 focus:outline-none focus:border-blue-400 focus:text-black text-sm"
               placeholder="Username" // Added
               required // Added
             />
             <input
               type="password"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
+              className="w-full border border-gray-300 text-black rounded px-3 py-1 mb-4 focus:outline-none focus:border-blue-400 focus:text-black text-sm"
               placeholder="Password"
               required
             />
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+              className="w-full bg-sky-300 text-black text-sm py-1 rounded hover:bg-orange-300"
             >
               {" "}
               Register
             </button>
             <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
           </form>
-          <div className="text-center text-gray-500 mt-4">- OR -</div>
+          <div className="text-center text-gray-500 mt-4 text-sm">- OR -</div>
           <Link
-            className="block text-center text-blue-500 hover:underline mt-2"
+            className="block text-center text-sky-300 text-sm hover:underline mt-2"
             href="/login"
           >
             Login with an existing account

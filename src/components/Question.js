@@ -50,11 +50,11 @@ export default function AskQuestion() {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Ask a question based on your notes..."
-          className="px-2 py-1 border rounded-xl mb-4 w-full text-black"
+          className="px-2 py-1 border rounded-xl mb-4 w-full text-black text-sm placeholder-gray-500"
         />
         <button
           onClick={handleAskQuestion}
-          className="bg-sky-400 text-black text-semibold p-1 rounded-xl w-full"
+          className="bg-sky-300 text-black text-semibold p-1 rounded-xl w-full"
           disabled={loading}
         >
           {loading ? 'Asking...' : 'Ask Question'}
