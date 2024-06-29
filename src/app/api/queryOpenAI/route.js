@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { NextResponse } from 'next/server';
 import connect from "../../../utils/db";
 import Note from "../../../models/Note";
+import User from "../../../models/User";
 import OpenAI from "openai";
 import { NEXT_AUTH } from "../../lib/auth";
 
@@ -23,10 +24,15 @@ export const POST = async (req, res) => {
   await connect();
 
   try {
-    const userId = session.user.id;
+    // Retrieve the user by their email address
+    const user = await User.findOne({ email: session.user.email });
 
-    // Fetch user's notes
-    const notes = await Note.find({ user: userId });
+    if (!user) {
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
+    }
+
+    // Use the user's MongoDB _id to query notes
+    const notes = await Note.find({ user: user._id });
 
     const { question } = await req.json(); // Correctly parses the request body for the question
 
@@ -36,14 +42,13 @@ export const POST = async (req, res) => {
 
     // Create context for the OpenAI query
     const context = notes.map((note) => note.transcript).join("\n");
-    console.log(context)
 
     // Send request to OpenAI for completions
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
         { role: "assistant", content: `${context}\n${question}` },
-        { role: "user", content: "Answer the question based on the context provided.If no context is present then give genral answers ." } // Instructs the model to answer the question
+        { role: "user", content: "Answer the question based on the context provided. If no context is present then give general answers." } // Instructs the model to answer the question
       ],
     });
 

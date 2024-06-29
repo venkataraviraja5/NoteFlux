@@ -1,4 +1,3 @@
-// pages/api/saveTranscript.js
 import { getServerSession } from "next-auth";
 import { NextResponse } from 'next/server';
 import connect from '../../../utils/db';
@@ -41,10 +40,8 @@ export const POST = async (req) => {
             return NextResponse.json({ success: false, message: 'Transcript is required' }, { status: 400 });
         }
 
-        const userId = session.user.id;
-
-        // Check if the user exists
-        const user = await User.findById(userId);
+        // Retrieve the user by their email address
+        const user = await User.findOne({ email: session.user.email });
         if (!user) {
             return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
         }
@@ -52,7 +49,7 @@ export const POST = async (req) => {
         // Create a new note associated with the user
         const newNote = new Note({
             transcript,
-            user: userId,
+            user: user._id,
         });
 
         // Save the note to the database
