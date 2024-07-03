@@ -122,7 +122,7 @@ const Register = () => {
                 "Register"
               )}
             </button>
-            <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
+            <p className="text-red-600 text-[14px] mb-4">{error && error}</p>
           </form>
           <div className="text-center text-gray-500 mt-4 text-sm">- OR -</div>
           <Link

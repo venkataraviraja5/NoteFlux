@@ -101,7 +101,7 @@ const Login = () => {
                 "Sign In"
               )}
             </button>
-            <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
+            <p className="text-red-600 text-[14px] mb-4">{error && error}</p>
           </form>
           <button
             className="w-full bg-black text-white py-1 rounded hover:bg-gray-800 text-sm"
