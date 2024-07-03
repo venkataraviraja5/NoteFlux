@@ -9,6 +9,7 @@ const Login = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const { data: session, status: sessionStatus } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
@@ -23,30 +24,39 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const email = e.target[0].value;
     const password = e.target[1].value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
+      setIsLoading(false);
       return;
     }
 
     if (!password || password.length < 8) {
       setError("Password is invalid");
+      setIsLoading(false);
       return;
     }
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
 
-    if (res?.error) {
-      setError("Invalid email or password");
-    } else {
-      setError("");
-      if (res?.url) router.replace("/dashboard");
+      if (res?.error) {
+        setError("Invalid email or password");
+      } else {
+        setError("");
+        if (res?.url) router.replace("/dashboard");
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,9 +88,18 @@ const Login = () => {
             />
             <button
               type="submit"
-              className="w-full bg-sky-300 text-black py-1 rounded hover:bg-orange-300 text-sm"
+              className={`w-full py-1 rounded text-sm ${
+                isLoading
+                  ? "bg-orange-300 text-gray-800 cursor-not-allowed"
+                  : "bg-sky-300 text-black hover:bg-orange-300"
+              }`}
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? (
+                <ClipLoader size={20} color={"#123abc"} loading={true} />
+              ) : (
+                "Sign In"
+              )}
             </button>
             <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
           </form>

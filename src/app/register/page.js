@@ -9,6 +9,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
@@ -23,22 +24,26 @@ const Register = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const email = e.target[0].value;
-    const username = e.target[1].value; // Added
-    const password = e.target[2].value; // Updated
+    const username = e.target[1].value;
+    const password = e.target[2].value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
+      setIsLoading(false);
       return;
     }
 
-    if (!username || username.trim() === "") { // Added
-      setError("Username is required"); // Added
-      return; // Added
-    } // Added
+    if (!username || username.trim() === "") {
+      setError("Username is required");
+      setIsLoading(false);
+      return;
+    }
 
     if (!password || password.length < 8) {
       setError("Password is invalid");
+      setIsLoading(false);
       return;
     }
 
@@ -50,7 +55,7 @@ const Register = () => {
         },
         body: JSON.stringify({
           email,
-          username, // Added
+          username,
           password,
         }),
       });
@@ -64,8 +69,11 @@ const Register = () => {
     } catch (error) {
       setError("Error, try again");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
 
   if (sessionStatus === "loading") {
     return   (
@@ -101,10 +109,18 @@ const Register = () => {
             />
             <button
               type="submit"
-              className="w-full bg-sky-300 text-black text-sm py-1 rounded hover:bg-orange-300"
+              className={`w-full py-1 rounded text-sm ${
+                isLoading
+                  ? "bg-orange-300 text-gray-800 cursor-not-allowed"
+                  : "bg-sky-300 text-black hover:bg-orange-300"
+              }`}
+              disabled={isLoading}
             >
-              {" "}
-              Register
+              {isLoading ? (
+                <ClipLoader size={20} color={"#123abc"} loading={true} />
+              ) : (
+                "Register"
+              )}
             </button>
             <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
           </form>
