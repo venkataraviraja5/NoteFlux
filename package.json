@@ -9,15 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
     "@types/dom-speech-recognition": "^0.0.4",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
+    "fullcalendar": "^6.1.15",
     "mongoose": "^8.4.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
     "openai": "^4.52.1",
+    "quill": "^2.0.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-quill": "^2.0.0",
     "react-speech-recognition": "^3.10.0",
     "react-spinners": "^0.14.1",
     "react-use-clipboard": "^1.0.9"
