@@ -16,7 +16,7 @@ export default function PastePage() {
   const [totalTime, setTotalTime] = useState(0);
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState('');
-  const [subTasks, setSubTasks] = useState({});
+  // const [subTasks, setSubTasks] = useState({});
   const [events, setEvents] = useState([]);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
@@ -125,18 +125,18 @@ export default function PastePage() {
     setTasks(newTasks);
   };
 
-  const addSubTask = (taskIndex, subTaskText) => {
-    setSubTasks({
-      ...subTasks,
-      [taskIndex]: [...(subTasks[taskIndex] || []), { text: subTaskText, completed: false }],
-    });
-  };
+  // const addSubTask = (taskIndex, subTaskText) => {
+  //   setSubTasks({
+  //     ...subTasks,
+  //     [taskIndex]: [...(subTasks[taskIndex] || []), { text: subTaskText, completed: false }],
+  //   });
+  // };
 
-  const toggleSubTaskCompletion = (taskIndex, subTaskIndex) => {
-    const newSubTasks = { ...subTasks };
-    newSubTasks[taskIndex][subTaskIndex].completed = !newSubTasks[taskIndex][subTaskIndex].completed;
-    setSubTasks(newSubTasks);
-  };
+  // const toggleSubTaskCompletion = (taskIndex, subTaskIndex) => {
+  //   const newSubTasks = { ...subTasks };
+  //   newSubTasks[taskIndex][subTaskIndex].completed = !newSubTasks[taskIndex][subTaskIndex].completed;
+  //   setSubTasks(newSubTasks);
+  // };
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg.dateStr);
@@ -176,6 +176,8 @@ export default function PastePage() {
                     cursor: 'pointer',
                     display: 'flex',
                     justifyContent: 'space-between',
+                    backgroundColor:'gray',
+                    marginLeft:'11px'
                   }}
                   onClick={() => toggleTaskCompletion(index)}
                 >
@@ -183,7 +185,7 @@ export default function PastePage() {
                   <span>{task.dueDate}</span>
                 </div>
                 <div style={{ marginLeft: '20px' }}>
-                  <h4>Subtasks</h4>
+                  {/* <h4>Subtasks</h4>
                   <ul>
                     {(subTasks[index] || []).map((subTask, subIndex) => (
                       <li
@@ -197,8 +199,8 @@ export default function PastePage() {
                         {subTask.text}
                       </li>
                     ))}
-                  </ul>
-                  <input
+                  </ul> */}
+                  {/* <input
                     type="text"
                     placeholder="Add subtask"
                     onKeyDown={(e) => {
@@ -208,7 +210,7 @@ export default function PastePage() {
                       }
                     }}
                     style={{ padding: '10px', fontSize: '16px', width: '60%' }}
-                  />
+                  /> */}
                 </div>
               </li>
             ))}
