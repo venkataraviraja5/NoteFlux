@@ -254,23 +254,41 @@ export default function PastePage() {
           eventClick={handleEventClick}
         />
         {showAddTaskModal && (
-          <div style={{ position: 'fixed', top: '20%', left: '50%', transform: 'translate(-50%, -50%)', background: 'white', padding: '20px', border: '1px solid #ccc', borderRadius: '4px', zIndex: 1000 }}>
+          <div style={{
+            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+            background: '#333', padding: '20px', border: '1px solid #555', borderRadius: '8px', zIndex: 1000,
+            color: '#ffffff', width: '400px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'
+          }}>
             <h3>{editingEvent ? 'Edit Task' : 'Add Task'}</h3>
             <input
-              type="text"
-              value={taskText}
-              onChange={(e) => setTaskText(e.target.value)}
-              placeholder="Task name"
-              style={{ padding: '10px', fontSize: '16px', width: '100%' }}
-            />
-            <div style={{ marginTop: '10px' }}>
-              <button onClick={updateTask} style={{ padding: '10px 20px', fontSize: '16px' }}>
-                {editingEvent ? 'Update' : 'Add'}
-              </button>
-              <button onClick={() => setShowAddTaskModal(false)} style={{ padding: '10px 20px', fontSize: '16px', marginLeft: '10px' }}>
-                Cancel
-              </button>
-            </div>
+  type="text"
+  value={taskText}
+  onChange={(e) => setTaskText(e.target.value)}
+  placeholder="Task name"
+  style={{
+    padding: '1px 1px',
+    fontSize: '16px',
+    width: '100%',
+    backgroundColor: '#555',
+    color: '#ffffff',
+    border: '1px solid #777',
+    borderRadius: '8px',
+    marginBottom: '10px',
+    marginTop: '10px',
+    textAlign: 'center',
+    lineHeight: '32px' // Adjust line height to match the input height
+  }}
+/>
+
+<div style={{ marginTop: '10px' }}>
+  <button onClick={updateTask} style={{ padding: '5px 20px', fontSize: '14px', borderRadius: '8px', border: '1px solid #777', backgroundColor: '#555', color: '#fff' }}>
+    {editingEvent ? 'Update' : 'Add'}
+  </button>
+  <button onClick={() => setShowAddTaskModal(false)} style={{ padding: '5px 20px', fontSize: '14px', marginLeft: '10px', borderRadius: '8px', border: '1px solid #777', backgroundColor: '#555', color: '#fff' }}>
+    Cancel
+  </button>
+</div>
+
           </div>
         )}
       </div>
