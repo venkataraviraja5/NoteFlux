@@ -151,9 +151,10 @@ export default function PastePage() {
   };
 
   return (
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
     <div style={{ padding: '20px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
       <div style={{ flex: '1 1 60%', minWidth: '300px' }}>
-        <h1>Workspace</h1>
+        <h1 className="ml-5 mb-3 text-xl">Workspace</h1>
         <form onSubmit={handleSubmit}>
           <RichTextEditor value={text} onChange={handleChange} />
           <button type="submit" style={{ padding: '10px 20px', fontSize: '16px' }}>
@@ -161,11 +162,11 @@ export default function PastePage() {
           </button>
         </form>
         <div style={{ marginTop: '20px' }}>
-          <h2>Preview:</h2>
+          <h2 className="ml-5">Preview:</h2>
           <div dangerouslySetInnerHTML={{ __html: text }} />
         </div>
         <div style={{ marginTop: '20px' }}>
-          <h2>To-Do List:</h2>
+          <h2 className="ml-4">To-Do List:</h2>
           <ul>
             {tasks.map((task, index) => (
               <li key={index} style={{ marginBottom: '10px' }}>
@@ -292,6 +293,7 @@ export default function PastePage() {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }
