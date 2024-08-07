@@ -5,24 +5,26 @@ import RichTextEditor from '../../components/RichTextEditor';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-
+import interactionPlugin from '@fullcalendar/interaction';
 
 export default function PastePage() {
   const [text, setText] = useState('');
   const [isRunning, setIsRunning] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
-  const [time, setTime] = useState(0); // Time in seconds
+  const [time, setTime] = useState(0);
   const [sessions, setSessions] = useState(0);
-  const [totalTime, setTotalTime] = useState(0); // Total time in seconds
+  const [totalTime, setTotalTime] = useState(0);
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState('');
-  const [taskDueDate, setTaskDueDate] = useState('');
   const [subTasks, setSubTasks] = useState({});
   const [events, setEvents] = useState([]);
+  const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [editingEvent, setEditingEvent] = useState(null);
   const timerRef = useRef(null);
 
-  const POMODORO_TIME = 25 * 60; // 25 minutes in seconds
-  const BREAK_TIME = 5 * 60; // 5 minutes in seconds
+  const POMODORO_TIME = 25 * 60;
+  const BREAK_TIME = 5 * 60;
 
   const handleChange = (content) => {
     setText(content);
@@ -31,7 +33,6 @@ export default function PastePage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Pasted Text:', text);
-    // You can also add any additional logic here, like sending the text to a backend server
   };
 
   const startTimer = () => {
@@ -78,22 +79,44 @@ export default function PastePage() {
 
   useEffect(() => {
     return () => {
-      clearInterval(timerRef.current); // Clean up the interval on component unmount
+      clearInterval(timerRef.current);
     };
   }, []);
 
-  const totalHours = (totalTime / 3600).toFixed(2); // Convert total time to hours
+  const totalHours = (totalTime / 3600).toFixed(2);
 
   const addTask = () => {
-    const newTask = { text: taskText, dueDate: taskDueDate, completed: false };
-    setTasks([...tasks, newTask]);
-    setEvents([...events, {
+    const newEvent = {
+      id: Date.now(),
       title: taskText,
-      start: taskDueDate,
+      start: selectedDate,
       allDay: true
-    }]);
+    };
+    setEvents([...events, newEvent]);
+    setTasks([...tasks, { text: taskText, dueDate: selectedDate, completed: false }]);
     setTaskText('');
-    setTaskDueDate('');
+    setShowAddTaskModal(false);
+  };
+
+  const updateTask = () => {
+    if (editingEvent) {
+      const updatedEvents = events.map(event => 
+        event.id === editingEvent.id ? { ...event, title: taskText } : event
+      );
+      setEvents(updatedEvents);
+      
+      const updatedTasks = tasks.map(task => 
+        task.dueDate === editingEvent.startStr && task.text === editingEvent.title
+          ? { ...task, text: taskText }
+          : task
+      );
+      setTasks(updatedTasks);
+    } else {
+      addTask();
+    }
+    setEditingEvent(null);
+    setTaskText('');
+    setShowAddTaskModal(false);
   };
 
   const toggleTaskCompletion = (index) => {
@@ -115,6 +138,18 @@ export default function PastePage() {
     setSubTasks(newSubTasks);
   };
 
+  const handleDateClick = (arg) => {
+    setSelectedDate(arg.dateStr);
+    setShowAddTaskModal(true);
+  };
+
+  const handleEventClick = (clickInfo) => {
+    setEditingEvent(clickInfo.event);
+    setTaskText(clickInfo.event.title);
+    setSelectedDate(clickInfo.event.startStr);
+    setShowAddTaskModal(true);
+  };
+
   return (
     <div style={{ padding: '20px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
       <div style={{ flex: '1 1 60%', minWidth: '300px' }}>
@@ -131,24 +166,6 @@ export default function PastePage() {
         </div>
         <div style={{ marginTop: '20px' }}>
           <h2>To-Do List:</h2>
-          <div style={{ marginBottom: '10px' }}>
-            <input
-              type="text"
-              value={taskText}
-              onChange={(e) => setTaskText(e.target.value)}
-              placeholder="Task Description"
-              style={{ padding: '10px', fontSize: '16px', width: '60%' }}
-            />
-            <input
-              type="date"
-              value={taskDueDate}
-              onChange={(e) => setTaskDueDate(e.target.value)}
-              style={{ padding: '10px', fontSize: '16px', width: '20%' }}
-            />
-            <button onClick={addTask} style={{ padding: '10px 20px', fontSize: '16px' }}>
-              Add Task
-            </button>
-          </div>
           <ul>
             {tasks.map((task, index) => (
               <li key={index} style={{ marginBottom: '10px' }}>
@@ -217,17 +234,45 @@ export default function PastePage() {
         )}
         <div style={{ marginTop: '20px' }}>
           <h3>Sessions Completed: {sessions}</h3>
-          <h3>Total Time Spent: {totalHours} hours</h3>
+          <h3>Total Time: {totalHours} hours</h3>
         </div>
       </div>
-      <div style={{ flex: '1 1 100%', marginTop: '20px' }}>
-        <h2>Calendar</h2>
+      <div style={{ flex: '1 1 100%', minWidth: '400px' }}>
         <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin]}
-          initialView="dayGridMonth"
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+          initialView='dayGridMonth'
+          editable={true}
+          selectable={true}
+          eventResizableFromStart={true}
           events={events}
-          eventClick={(info) => alert(`Event: ${info.event.title}`)}
+          dateClick={handleDateClick}
+          eventClick={handleEventClick}
         />
+        {showAddTaskModal && (
+          <div style={{ position: 'fixed', top: '20%', left: '50%', transform: 'translate(-50%, -50%)', background: 'white', padding: '20px', border: '1px solid #ccc', borderRadius: '4px', zIndex: 1000 }}>
+            <h3>{editingEvent ? 'Edit Task' : 'Add Task'}</h3>
+            <input
+              type="text"
+              value={taskText}
+              onChange={(e) => setTaskText(e.target.value)}
+              placeholder="Task name"
+              style={{ padding: '10px', fontSize: '16px', width: '100%' }}
+            />
+            <div style={{ marginTop: '10px' }}>
+              <button onClick={updateTask} style={{ padding: '10px 20px', fontSize: '16px' }}>
+                {editingEvent ? 'Update' : 'Add'}
+              </button>
+              <button onClick={() => setShowAddTaskModal(false)} style={{ padding: '10px 20px', fontSize: '16px', marginLeft: '10px' }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
