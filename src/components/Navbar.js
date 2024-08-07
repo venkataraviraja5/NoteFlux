@@ -1,51 +1,65 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const pathname = usePathname();
+
   return (
-    <div>
+    <nav>
       <ul className="flex md:justify-between m-10 items-center text-black sm:flex-row justify-around">
         <div>
-          <Link href="/">
-            <li className="bg-[#dafa53] rounded-full text-sm py-1 px-5">Home</li>
-          </Link>
+          {pathname === '/' ? (
+            <Link href="/workspace" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+              Workspace
+            </Link>
+          ) : pathname === '/workspace' ? (
+            <Link href="/" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+              Home
+            </Link>
+          ) : (
+            <>
+              <Link href="/" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+                Home
+              </Link>
+              <Link href="/workspace" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+                Workspace
+              </Link>
+            </>
+          )}
         </div>
         <div className="flex gap-10">
-          {/* <Link href="/dashboard">
-            <li className="bg-[#dafa53] rounded-full font-semibold py-1 px-5">Dashboard</li>
-          </Link> */}
           {!session ? (
             <>
-              <Link href="/login">
-                <li className="bg-[#dafa53] rounded-full text-sm py-1 px-5">Login</li>
+              <Link href="/login" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+                Login
               </Link>
-              <Link href="/register">
-                <li className="bg-[#dafa53] rounded-full text-sm py-1 px-5">Register</li>
+              <Link href="/register" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+                Register
               </Link>
             </>
           ) : (
             session.provider !== "google" && session.user?.username && (
-              <li className="bg-[#dafa53] rounded-full text-sm py-1 px-5 items-center">{session.user?.username}</li>
+              <span className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+                {session.user.username}
+              </span>
             )
           )}
           {session && (
-            <li>
-              <button
-                onClick={() => {
-                  signOut();
-                }}
-                className="py-1 px-5 text-sm bg-sky-300 rounded-full"
-              >
-                Logout
-              </button>
-            </li>
+            <button
+              onClick={() => signOut()}
+              className="py-1 px-5 text-sm bg-sky-300 rounded-full"
+            >
+              Logout
+            </button>
           )}
         </div>
       </ul>
-    </div>
+    </nav>
   );
 };
 
