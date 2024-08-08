@@ -157,9 +157,9 @@ export default function PastePage() {
         <h1 className="ml-5 mb-3 text-xl">Workspace</h1>
         <form onSubmit={handleSubmit}>
           <RichTextEditor value={text} onChange={handleChange} />
-          <button type="submit" style={{ padding: '10px 20px', fontSize: '16px' }}>
+          {/* <button type="submit" style={{ padding: '10px 20px', fontSize: '16px' }}>
             Submit
-          </button>
+          </button> */}
         </form>
         <div style={{ marginTop: '20px' }}>
           <h2 className="ml-5">Preview:</h2>
