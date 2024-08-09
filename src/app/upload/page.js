@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { UploadButton } from "@uploadthing/react"
 import { useSession } from "next-auth/react"
+import Link from "next/link"
 
 const Upload = () => {
    
@@ -152,6 +153,9 @@ const Upload = () => {
                       <button onClick={() =>deletePdf(value)}>
                         Delete
                       </button>
+                    </div>
+                    <div>
+                      <Link href={`view-pdf/134`}>View</Link>
                     </div>
                   </p>
                 ))
