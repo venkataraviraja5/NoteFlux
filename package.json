@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@types/dom-speech-recognition": "^0.0.4",
+    "@uploadthing/react": "^6.7.2",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
+    "mongodb": "^6.8.0",
     "mongoose": "^8.4.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
@@ -20,7 +22,8 @@
     "react-dom": "^18",
     "react-speech-recognition": "^3.10.0",
     "react-spinners": "^0.14.1",
-    "react-use-clipboard": "^1.0.9"
+    "react-use-clipboard": "^1.0.9",
+    "uploadthing": "^6.13.2"
   },
   "devDependencies": {
     "@types/node": "20.14.2",
