@@ -147,7 +147,7 @@ const Upload = () => {
             <div className="flex justify-center items-center gap-2 flex-col mt-2">
               {
                 [...userPdfs].reverse().map((value) => (
-                  <p key={value._id} style={{height:"50px",width:"100px",padding:"5px",backgroundColor:"pink"}}>
+                  <p key={value._id} style={{height:"auto",width:"100px",padding:"5px",backgroundColor:"pink"}}>
                     <a href={value.pdfUrl}>{value.pdfName}</a>
                     <div>
                       <button onClick={() =>deletePdf(value)}>
@@ -155,7 +155,7 @@ const Upload = () => {
                       </button>
                     </div>
                     <div>
-                      <Link href={`view-pdf/134`}>View</Link>
+                      <Link href={`view-pdf/${value.pdfUrl.slice(18,value.pdfUrl.length)}`}>View</Link>
                     </div>
                   </p>
                 ))

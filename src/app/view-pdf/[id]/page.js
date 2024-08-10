@@ -1,13 +1,18 @@
 "use client"
-import React from 'react'
 import { useParams } from 'next/navigation'
+import React from 'react'
+import PdfChat from '../../../components/PdfChat'
 
-const page = () => {
-    const {id} = useParams()
+const page = async() => {
+   const {id} = useParams()
+
+   const pdfUrl = `https://utfs.io/f/${id}`;
+
+   
   return (
     <div>
-      <h1>View</h1>
-      {id}
+      <iframe src={pdfUrl}></iframe> 
+      <PdfChat />
     </div>
   )
 }
