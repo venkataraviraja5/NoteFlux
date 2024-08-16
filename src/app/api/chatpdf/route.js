@@ -12,7 +12,7 @@ import { Document } from "@langchain/core/documents";
 
 export const POST = async(request) => {
     const {pdfUrl,question} = await request.json()
-    console.log(pdfUrl,question)
+    console.log(pdfUrl,question) 
     try {
       // Fetch the PDF from the URL
       const response = await fetch(`https://utfs.io/f/${pdfUrl}`);
