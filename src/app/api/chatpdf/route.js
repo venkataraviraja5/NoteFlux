@@ -12,7 +12,7 @@ import { Document } from "@langchain/core/documents";
 
 export const POST = async(request) => {
     const {pdfUrl,question} = await request.json()
-    console.log(pdfUrl,question) 
+   // console.log(pdfUrl,question) 
     try {
       // Fetch the PDF from the URL
       const response = await fetch(`https://utfs.io/f/${pdfUrl}`);
@@ -31,7 +31,8 @@ export const POST = async(request) => {
           chunkSize: 1000,
           chunkOverlap: 200,
         });
-  
+         
+        //Convert data into chunks
         const splits = await textSplitter.splitDocuments([
           new Document({ pageContent: data.text }),
         ]);
@@ -50,10 +51,10 @@ export const POST = async(request) => {
       });
   
       // Return the parsed text as JSON
-      return NextResponse.json({ result: answer.text});
+      return NextResponse.json({success : true, result: answer.text},{status : 200});
     } catch (error) {
       // Handle errors and return an appropriate response
-      return NextResponse.json({ error: "not fetched" }, { status: 500 });
+      return NextResponse.json({ error: "not fetched" }, { status: 400 });
     }
   
 }

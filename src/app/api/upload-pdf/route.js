@@ -31,7 +31,7 @@ export const GET = async(request) =>{
     if (request.method === 'GET') {
         const url = new URL(request.url);
         const queryParam = url.searchParams.get('query');
-
+        console.log(queryParam,'paraaaaam')
         if(queryParam){
             const getPdfs = await Pdf.find({userId : queryParam }).sort({ createdAt: -1 })
             return NextResponse.json({result: getPdfs})
