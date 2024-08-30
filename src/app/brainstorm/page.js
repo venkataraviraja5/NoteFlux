@@ -11,7 +11,10 @@ const Excalidraw = dynamic(() => import("@excalidraw/excalidraw").then(mod => mo
 export default function Brainstorm() {
   const [items, setItems] = useState([]);
   const [canvases, setCanvases] = useState([]);
-  const [initialData, setInitialData] = useState(null);
+  const [initialData, setInitialData] = useState({
+    elements: [],
+    appState: { viewBackgroundColor: "#ffffff" },
+  });
   const [currentCanvasId, setCurrentCanvasId] = useState(null);
   const [canvasName, setCanvasName] = useState("Untitled Canvas");
   const [isLoading, setIsLoading] = useState(false);
@@ -84,13 +87,7 @@ export default function Brainstorm() {
         setCurrentCanvasId(canvasId);
         setCanvasName(selectedCanvas.name || "Untitled Canvas");
       } else {
-        setInitialData({
-          elements: [],
-          appState: { viewBackgroundColor: "#ffffff" },
-        });
-        setItems([]);
-        setCurrentCanvasId(null);
-        setCanvasName("Untitled Canvas");
+        handleNewCanvas();
       }
       setIsLoading(false);
     },
@@ -123,7 +120,7 @@ export default function Brainstorm() {
     return () => clearTimeout(debounce);
   }, [items, saveCanvas]);
 
-  const handleNewCanvas = () => {
+  const handleNewCanvas = useCallback(() => {
     setInitialData({
       elements: [],
       appState: { viewBackgroundColor: "#ffffff" },
@@ -131,7 +128,7 @@ export default function Brainstorm() {
     setItems([]);
     setCurrentCanvasId(null);
     setCanvasName("Untitled Canvas");
-  };
+  }, []);
 
   return (
     <>
@@ -144,15 +141,15 @@ export default function Brainstorm() {
         <div className="w-64 bg-gray-800 p-4 flex flex-col">
           <h1 className="text-white text-xl font-bold mb-4">Brainstorm</h1>
           <button 
-  onClick={handleNewCanvas}
-  disabled={isLoading}
-  className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 mb-4"
->
-  <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-  <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-    New Canvas
-  </span>
-</button>
+            onClick={handleNewCanvas}
+            disabled={isLoading}
+            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 mb-4"
+          >
+            <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              New Canvas
+            </span>
+          </button>
           <select
             onChange={(e) => loadCanvasById(e.target.value)}
             className="p-2 rounded border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
@@ -181,16 +178,14 @@ export default function Brainstorm() {
 
         <div className="flex-1 p-4">
           <div className="w-full h-full bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-            {initialData && (
-              <Excalidraw
-                key={currentCanvasId || 'new'}
-                theme="dark"
-                initialData={initialData}
-                onChange={(elements, state) => {
-                  setItems(elements);
-                }}
-              />
-            )}
+            <Excalidraw
+              key={currentCanvasId || 'new'}
+              theme="dark"
+              initialData={initialData}
+              onChange={(elements, state) => {
+                setItems(elements);
+              }}
+            />
           </div>
         </div>
       </div>

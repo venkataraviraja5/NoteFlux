@@ -35,6 +35,9 @@ const Navbar = () => {
           <Link href="/notes" className="bg-[#dafa53] rounded-full text-sm py-1 px-5 ml-3">
             Notes
           </Link>
+          <Link href="/brainstorm" className="bg-[#dafa53] rounded-full text-sm py-1 px-5 ml-3">
+            Brainstorm
+          </Link>
         </div>
         <div className="flex gap-10">
           {!session ? (

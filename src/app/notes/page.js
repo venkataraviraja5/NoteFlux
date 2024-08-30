@@ -92,7 +92,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen h-auto flex flex-wrap justify-center p-4 bg-lime-300">
-      <div className="flex flex-wrap justify-center gap-4 mb-4 h-2/5">
+      <div className="flex flex-wrap justify-center gap-4 mb-16 h-2/5">
         {notes.map((note, index) => (
           <Note
             key={note._id || index}
@@ -104,18 +104,26 @@ export default function Home() {
           />
         ))}
       </div>
-      <button
-        onClick={addNote}
-        className="bg-lime-300 text-black border-black border-2 text-lg rounded-full w-14 h-14 flex items-center justify-center fixed bottom-4 right-4 shadow-lg transition-colors hover:bg-green-400"
-      >
-        +
-      </button>
-      <button
-        onClick={saveNotes}
-        className="bg-lime-300 text-black border-black border-2 rounded-full px-4 py-2 fixed bottom-4 left-4 shadow-lg transition-colors hover:bg-green-400"
-      >
-        Save
-      </button>
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-4">
+        <button 
+          onClick={saveNotes}
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            Save
+          </span>
+        </button>
+        <button 
+          onClick={addNote}
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 py-1 text-base font-medium text-white backdrop-blur-3xl">
+            +
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
