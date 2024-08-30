@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <ul className="flex md:justify-between m-10 items-center text-black sm:flex-row justify-around">
+      <ul className="flex md:justify-between m-5 items-center text-black sm:flex-row justify-around">
         <div>
           {pathname === '/' ? (
             <Link href="/workspace" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
@@ -26,11 +26,15 @@ const Navbar = () => {
               <Link href="/" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
                 Home
               </Link>
-              <Link href="/workspace" className="bg-[#dafa53] rounded-full text-sm py-1 px-5">
+              <Link href="/workspace" className="bg-[#dafa53] rounded-full text-sm py-1 px-5 ml-3">
                 Workspace
               </Link>
+              
             </>
           )}
+          <Link href="/notes" className="bg-[#dafa53] rounded-full text-sm py-1 px-5 ml-3">
+            Notes
+          </Link>
         </div>
         <div className="flex gap-10">
           {!session ? (

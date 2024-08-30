@@ -3,6 +3,8 @@ import "./globals.css";
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "../utils/SessionProvider"
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 import Navbar from "../components/Navbar"
 
@@ -18,12 +20,15 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+      {/* <div id="app"> */}
         <SessionProvider session={session}>
         <div>
         <Navbar/>
         {children}
         </div>
+
         </SessionProvider>
+        {/* </div> */}
         </body>
     </html>
   );
