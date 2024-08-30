@@ -3,8 +3,7 @@ import "./globals.css";
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "../utils/SessionProvider"
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
+
 
 import Navbar from "../components/Navbar"
 
