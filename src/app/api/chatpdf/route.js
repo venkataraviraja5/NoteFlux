@@ -38,11 +38,11 @@ export const POST = async(request) => {
         ]);
   
         const embeddings = new OpenAIEmbeddings({
-          // apiKey: "sk-proj-iXmuyBnlBWxhn54fvphAT3BlbkFJvCKR8TcejWDkn4XNZXdq"
+          // apiKey: ""
         });
         const vectorStore = await MemoryVectorStore.fromDocuments(splits, embeddings);
   
-        // const model = new OpenAI({apiKey: "sk-proj-iXmuyBnlBWxhn54fvphAT3BlbkFJvCKR8TcejWDkn4XNZXdq"});
+        // const model = new OpenAI({apiKey: ""});
         const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
   
       // Get answer
