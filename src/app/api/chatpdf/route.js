@@ -38,7 +38,7 @@ export const POST = async(request) => {
         ]);
   
         const embeddings = new OpenAIEmbeddings({
-          apiKey: "sk-proj-iXmuyBnlBWxhn54fvphAT3BlbkFJvCKR8TcejWDkn4XNZXdq"
+          // apiKey: "sk-proj-iXmuyBnlBWxhn54fvphAT3BlbkFJvCKR8TcejWDkn4XNZXdq"
         });
         const vectorStore = await MemoryVectorStore.fromDocuments(splits, embeddings);
   
