@@ -42,7 +42,7 @@ export const POST = async(request) => {
         });
         const vectorStore = await MemoryVectorStore.fromDocuments(splits, embeddings);
   
-        const model = new OpenAI({apiKey: "sk-proj-iXmuyBnlBWxhn54fvphAT3BlbkFJvCKR8TcejWDkn4XNZXdq"});
+        // const model = new OpenAI({apiKey: "sk-proj-iXmuyBnlBWxhn54fvphAT3BlbkFJvCKR8TcejWDkn4XNZXdq"});
         const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
   
       // Get answer
