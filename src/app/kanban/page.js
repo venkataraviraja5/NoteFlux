@@ -4,7 +4,10 @@ import KanbanBoard from '../../components/kanban/KanbanBoard'
 
 function App() {
  return(
-  <KanbanBoard/>
+    <div className="w-full h-screen">
+ <KanbanBoard/>
+    </div>
+ 
  )
 }
 
