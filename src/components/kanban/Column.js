@@ -45,7 +45,7 @@ function ColumnContainer({
           bg-columnBackgroundColor
           opacity-40
           border-2
-          border-pink-500
+          border-sky-300
           flex-grow
           min-w-[250px]
           h-[500px]
@@ -83,7 +83,7 @@ function ColumnContainer({
         className="
           bg-mainBackgroundColor
           text-md
-          h-[60px]
+          h-[50px]
           cursor-grab
           rounded-md
           rounded-b-none
@@ -96,7 +96,7 @@ function ColumnContainer({
           justify-between
         "
       >
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <div
             className="
               flex
@@ -114,7 +114,7 @@ function ColumnContainer({
           {!editMode && column.title}
           {editMode && (
             <input
-              className="bg-black focus:border-rose-500 border rounded outline-none px-2"
+              className="bg-black focus:border-sky-300 border rounded outline-none px-2"
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
               autoFocus
@@ -141,7 +141,7 @@ function ColumnContainer({
             py-2
           "
         >
-          <Trash2 size={20} />
+          <Trash2 size={16} />
         </button>
       </div>
 

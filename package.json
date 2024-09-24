@@ -46,7 +46,8 @@
     "react-speech-recognition": "^3.10.0",
     "react-spinners": "^0.14.1",
     "react-trello": "^2.2.11",
-    "react-use-clipboard": "^1.0.9"
+    "react-use-clipboard": "^1.0.9",
+    "react-zoom-pan-pinch": "^3.6.1"
   },
   "devDependencies": {
     "@types/node": "20.14.2",

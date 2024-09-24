@@ -255,7 +255,7 @@ function KanbanBoard() {
   if (status === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">
-        <ClipLoader color="#e11d48" size={50} /> {/* Rose color for consistency */}
+        <ClipLoader color="#7dd3fc" size={50} /> {/* Rose color for consistency */}
       </div>
     );
   }

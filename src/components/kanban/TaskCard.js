@@ -86,7 +86,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
       <div
         ref={setNodeRef}
         style={style}
-        className="opacity-30 bg-gray-800 p-4 rounded-xl border-2 border-rose-500 cursor-grab"
+        className="opacity-30 bg-gray-800 p-4 rounded-xl border-2 border-sky-300 cursor-grab"
       />
     );
   }
@@ -163,7 +163,7 @@ const TaskCard = ({ task, deleteTask, updateTask }) => {
             />
             <button 
               onClick={addSubtask} 
-              className="text-white bg-rose-500 hover:bg-rose-600 p-1 rounded"
+              className="text-white bg-rose-500 hover:bg-sky-300 p-1 rounded"
             >
               <Plus size={20} />
             </button>
